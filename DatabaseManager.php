@@ -15,15 +15,14 @@ class DatabaseManager
         $connection = mysqli_connect("localhost", "root", "");
         $sqlcommand = "CREATE DATABASE " . DatabaseManager::DATABASE_NAME;
         if (mysqli_query($connection, $sqlcommand)) {
-            echo "ok";
+            echo "Database creataed successfully  ";
         }
     }
-
 
     function createFormoulTable()
     {
         $connection = mysqli_connect("localhost", "root", "", DatabaseManager::DATABASE_NAME);
-        $sqlCommand = "CREATE TABLE formouls(id INT UNSIGNED AUTO_INCREMENT PRIMARY  KEY,
+        $sqlCommand = "CREATE TABLE formouls (id INT UNSIGNED AUTO_INCREMENT PRIMARY  KEY,
 title VARCHAR (100) ,
 content varchar (300) ,
 image varchar (500) ,
@@ -39,11 +38,12 @@ class INT )";
     function AddFormoul($title, $content, $image, $class)
     {
         $connection = mysqli_connect("localhost", "root", "", DatabaseManager::DATABASE_NAME);
-        $sqlCommand = "INSERT INTO formouls (title,content,image,class) VALUES($title,$content,$image,$class) ";
+        $sqlCommand = "INSERT INTO formouls(title,content,image,class) VALUES('$title','$content','$image','$class') ";
         if (mysqli_query($connection, $sqlCommand)) {
             echo "formoul added to table successfully";
         } else {
             echo "## formoul NOT ADDED to table ## ";
+            echo " erore " . mysqli_error($connection);
 
         }
     }
@@ -54,7 +54,9 @@ class INT )";
         $sqlQuery = "SELECT * FROM formouls";
         $result = $connection->query($sqlQuery);
         $formoulArray = array();
+
         if ($result->num_rows > 0) {
+
             for ($i = 0; $i < $result->num_rows; $i++) {
                 $formoulArray[$i] = $result->fetch_assoc();
             }

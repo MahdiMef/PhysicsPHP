@@ -12,3 +12,4 @@ $class = $_POST['class'];
 include 'DatabaseManager.php';
 $databsemanager = new DatabaseManager();
 $databsemanager->AddFormoul($title, $content, $image, $class);
+include 'HtmlForAddFormoul.php';
